@@ -1,5 +1,5 @@
 package textdecorators;
 
-public class AbstractTextDecorator {
-    
+public abstract class AbstractTextDecorator {
+    public abstract void processInputDetails();
 }
