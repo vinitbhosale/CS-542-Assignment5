@@ -10,6 +10,7 @@ import textdecorators.MostFrequentWordDecorator;
 import textdecorators.SentenceDecorator;
 import textdecorators.SpellCheckDecorator;
 import textdecorators.userException.SameFileNameException;
+import textdecorators.util.FileProcessor;
 import textdecorators.util.InputDetails;
 import textdecorators.util.InputDetailsI;
 import textdecorators.util.MyLogger;
@@ -55,11 +56,16 @@ public class Driver {
             MyLogger.getInstnace().setDebugValue(Integer.parseInt(args[4]));
             MyLogger.getInstnace().writeMessage("Setting debug level to " + args[4], MyLogger.DebugLevel.DRIVER);
 
-            InputDetailsI inputD = new InputDetails(args[0], args[3]);
+            FileProcessor fp = new FileProcessor(args[0]);
+
+            InputDetailsI inputD = new InputDetails(fp, args[3]);
+            inputD.print();
             AbstractTextDecorator sentenceDecorator = new SentenceDecorator(null, inputD);
             AbstractTextDecorator spellCheckDecorator = new SpellCheckDecorator(sentenceDecorator, inputD);
             AbstractTextDecorator keywordDecorator = new KeywordDecorator(spellCheckDecorator, inputD);
             AbstractTextDecorator mostFreqWordDecorator = new MostFrequentWordDecorator(keywordDecorator, inputD);
+
+            mostFreqWordDecorator.processInputDetails();
 
         } catch (InvalidPathException | IOException | SameFileNameException e) {
             System.err.println(e.getMessage());

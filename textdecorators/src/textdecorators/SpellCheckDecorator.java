@@ -13,7 +13,9 @@ public class SpellCheckDecorator extends AbstractTextDecorator {
     @Override
     public void processInputDetails() {
         // TODO Auto-generated method stub
-
+        if (null != atd) {
+            atd.processInputDetails();
+        }
     }
     
 }
