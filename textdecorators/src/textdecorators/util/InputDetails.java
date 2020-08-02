@@ -10,7 +10,6 @@ public class InputDetails implements InputDetailsI, StdoutDisplayInterface, File
     private String outputFile;
     private String strData;
     private List<String> inputLines = new ArrayList<>();
-    private int index = 0;
     private String temp = "";
     private Pattern pattern = Pattern.compile("[$&+:;=\\\\?@#|/'<>^*()%!-]+");
 
@@ -19,6 +18,7 @@ public class InputDetails implements InputDetailsI, StdoutDisplayInterface, File
         outputFile = inOutputFile;
         inputFileProcessor(fp);
     }
+
     @Override
     public void writeToFile() throws IOException {
         // TODO Auto-generated method stub
@@ -32,9 +32,23 @@ public class InputDetails implements InputDetailsI, StdoutDisplayInterface, File
     }
 
     @Override
-    public void storeResult(String temp) {
+    public void update(String word) {
+        int index = 0;
+        List<String> tempInputLines = new ArrayList<>();
         // TODO Auto-generated method stub
+        for (String sentence : inputLines) {
+            String[] wrd = sentence.split("\\s");
+            for (int i = 0; i < wrd.length; i++) {
+                if (word.equals(wrd[i].toLowerCase())) {
+                    wrd[i] = "MOST_FREQUENT_" + wrd[i] + "_MOST_FREQUENT";
+                }
+            }
+            tempInputLines.add(index, String.join(" ", wrd));
+            index+=1;
+        }
 
+        inputLines = tempInputLines;
+        
     }
 
     @Override
@@ -84,7 +98,5 @@ public class InputDetails implements InputDetailsI, StdoutDisplayInterface, File
             System.out.println(string);
         }
     }
-
-   
 
 }

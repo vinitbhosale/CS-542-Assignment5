@@ -59,14 +59,14 @@ public class Driver {
             FileProcessor fp = new FileProcessor(args[0]);
 
             InputDetailsI inputD = new InputDetails(fp, args[3]);
-            inputD.print();
+            
             AbstractTextDecorator sentenceDecorator = new SentenceDecorator(null, inputD);
             AbstractTextDecorator spellCheckDecorator = new SpellCheckDecorator(sentenceDecorator, inputD);
             AbstractTextDecorator keywordDecorator = new KeywordDecorator(spellCheckDecorator, inputD);
             AbstractTextDecorator mostFreqWordDecorator = new MostFrequentWordDecorator(keywordDecorator, inputD);
 
             mostFreqWordDecorator.processInputDetails();
-
+            //inputD.print();
         } catch (InvalidPathException | IOException | SameFileNameException e) {
             System.err.println(e.getMessage());
         }
