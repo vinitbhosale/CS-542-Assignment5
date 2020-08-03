@@ -57,16 +57,18 @@ public class Driver {
             MyLogger.getInstnace().writeMessage("Setting debug level to " + args[4], MyLogger.DebugLevel.DRIVER);
 
             FileProcessor fp = new FileProcessor(args[0]);
+            FileProcessor keyWordFp = new FileProcessor(args[2]);
+            FileProcessor spellCheckFp = new FileProcessor(args[1]);
 
             InputDetailsI inputD = new InputDetails(fp, args[3]);
             
             AbstractTextDecorator sentenceDecorator = new SentenceDecorator(null, inputD);
-            AbstractTextDecorator spellCheckDecorator = new SpellCheckDecorator(sentenceDecorator, inputD);
-            AbstractTextDecorator keywordDecorator = new KeywordDecorator(spellCheckDecorator, inputD);
+            AbstractTextDecorator spellCheckDecorator = new SpellCheckDecorator(sentenceDecorator, inputD, spellCheckFp);
+            AbstractTextDecorator keywordDecorator = new KeywordDecorator(spellCheckDecorator, inputD, keyWordFp);
             AbstractTextDecorator mostFreqWordDecorator = new MostFrequentWordDecorator(keywordDecorator, inputD);
 
             mostFreqWordDecorator.processInputDetails();
-            //inputD.print();
+            inputD.print();
         } catch (InvalidPathException | IOException | SameFileNameException e) {
             System.err.println(e.getMessage());
         }

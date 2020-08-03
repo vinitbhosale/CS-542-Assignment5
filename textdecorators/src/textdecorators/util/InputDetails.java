@@ -32,22 +32,10 @@ public class InputDetails implements InputDetailsI, StdoutDisplayInterface, File
     }
 
     @Override
-    public void update(String word) {
-        int index = 0;
-        List<String> tempInputLines = new ArrayList<>();
+    public void update(String word, int index) {
         // TODO Auto-generated method stub
-        for (String sentence : inputLines) {
-            String[] wrd = sentence.split("\\s");
-            for (int i = 0; i < wrd.length; i++) {
-                if (word.equals(wrd[i].toLowerCase())) {
-                    wrd[i] = "MOST_FREQUENT_" + wrd[i] + "_MOST_FREQUENT";
-                }
-            }
-            tempInputLines.add(index, String.join(" ", wrd));
-            index+=1;
-        }
-
-        inputLines = tempInputLines;
+       
+        inputLines.set(index, word);
         
     }
 
