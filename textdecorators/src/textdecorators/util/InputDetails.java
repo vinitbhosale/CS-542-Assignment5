@@ -1,5 +1,8 @@
 package textdecorators.util;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,36 +10,51 @@ import java.util.regex.Pattern;
 
 public class InputDetails implements InputDetailsI, StdoutDisplayInterface, FileDisplayInterface {
     private FileProcessor fp;
-    private String outputFile;
+    private File outputFile;
+    private String outputFilePath;
     private String strData;
     private List<String> inputLines = new ArrayList<>();
     private String temp = "";
-    private Pattern pattern = Pattern.compile("[$&+:;=\\\\?@#|/'<>^*()%!-]+");
+    private Pattern pattern = Pattern.compile("[$&+:;=?@#|/'<>^*()%!-]+");
 
     public InputDetails(FileProcessor inFp, String inOutputFile) throws IOException {
         fp = inFp;
-        outputFile = inOutputFile;
+        outputFilePath = inOutputFile;
         inputFileProcessor(fp);
     }
 
     @Override
     public void writeToFile() throws IOException {
         // TODO Auto-generated method stub
+        outputFile = new File(outputFilePath);
+        if (!outputFile.exists()) {
+            outputFile.createNewFile();
+        }
 
+        BufferedWriter outputBufferedWriter = new BufferedWriter(new FileWriter(outputFile));
+
+        for (String string : inputLines) {
+            outputBufferedWriter.write(string + "\n");
+        }
+
+        outputBufferedWriter.close();
     }
 
     @Override
     public void writeToStdout() {
         // TODO Auto-generated method stub
+        for (String string : inputLines) {
+            System.out.println(string);
+        }
 
     }
 
     @Override
     public void update(String word, int index) {
         // TODO Auto-generated method stub
-       
+
         inputLines.set(index, word);
-        
+
     }
 
     @Override
@@ -46,25 +64,24 @@ public class InputDetails implements InputDetailsI, StdoutDisplayInterface, File
     }
 
     public void inputFileProcessor(FileProcessor fp) throws IOException {
+        int index = 0;
         strData = fp.poll();
         // Condition to check Empty input file.
-        if (null == strData) {
-            // throw new EmptyInputFileException("Empty Input File!");
+        if(strData == null){
+            // empty
         }
 
         while (null != strData) {
-            // Empty line condition.
-            if (strData.length() == 0) {
-                // throw new ErroFileException("Empty line in input file!");
-            }
+
             if (pattern.matcher(strData).find()) {
                 System.out.println("Pattern");
                 // throw new SpecialCharException("Input file contain special charachters!");
             }
+
             if (strData.indexOf(".") >= 0) {
                 String[] tempStrings = strData.split("\\.");
                 for (int i = 0; i < tempStrings.length - 1; i++) {
-                    temp = temp.concat(tempStrings[i]);
+                    temp = temp.concat(tempStrings[i]+"\n");
                     inputLines.add(temp);
                     temp = "";
                 }
@@ -75,16 +92,14 @@ public class InputDetails implements InputDetailsI, StdoutDisplayInterface, File
                 }
 
             } else {
-                temp = temp.concat(strData);
+                temp = temp.concat(strData+"\n");
             }
             strData = fp.poll();
         }
-    }
-
-    public void print() {
-        for (String string : inputLines) {
-            System.out.println(string);
-        }
+        
+        // for (String string : inputLines) {
+        //     System.out.print(string);
+        // }
     }
 
 }

@@ -14,6 +14,8 @@ import textdecorators.util.FileProcessor;
 import textdecorators.util.InputDetails;
 import textdecorators.util.InputDetailsI;
 import textdecorators.util.MyLogger;
+import textdecorators.util.StdoutDisplayInterface;
+import textdecorators.util.FileDisplayInterface;
 
 public class Driver {
     public static void main(String[] args)
@@ -67,8 +69,9 @@ public class Driver {
             AbstractTextDecorator keywordDecorator = new KeywordDecorator(spellCheckDecorator, inputD, keyWordFp);
             AbstractTextDecorator mostFreqWordDecorator = new MostFrequentWordDecorator(keywordDecorator, inputD);
 
-            mostFreqWordDecorator.processInputDetails();
-            inputD.print();
+             mostFreqWordDecorator.processInputDetails();
+            //((StdoutDisplayInterface) inputD).writeToStdout();
+            // ((FileDisplayInterface) inputD).writeToFile();
         } catch (InvalidPathException | IOException | SameFileNameException e) {
             System.err.println(e.getMessage());
         }

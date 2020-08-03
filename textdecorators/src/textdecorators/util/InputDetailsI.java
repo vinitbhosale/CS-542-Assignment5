@@ -7,6 +7,5 @@ import java.util.List;
  */
 public interface InputDetailsI {
     public void update(String word, int index);
-    public void print();
     public List<String> getInputLineList();
 }

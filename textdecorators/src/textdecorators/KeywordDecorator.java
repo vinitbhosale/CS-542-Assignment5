@@ -27,17 +27,18 @@ public class KeywordDecorator extends AbstractTextDecorator {
     public void processInputDetails() {
 
         for (String sentence : id.getInputLineList()) {
-            String[] word = sentence.split("\\s");
+            String[] word = sentence.split(" ");
             for (int i = 0; i < word.length; i++) {
+                //System.out.println("Kenny="+word[i]+"=kenny");
                 for (String keyWrd : keyWords) {
                     int indexOfKeyWrd = word[i].toLowerCase().indexOf(keyWrd);
+                    
+                    // if (indexOfKeyWrd == 0 && word[i].toLowerCase().equals(keyWrd)) {
+                    //     word[i] = "KEYWORD_" + word[i] + "_KEYWORD";
 
-                    if (indexOfKeyWrd == 0 && word[i].toLowerCase().equals(keyWrd)) {
-                        word[i] = "KEYWORD_" + word[i] + "_KEYWORD";
-
-                    } else if ((indexOfKeyWrd = word[i].toLowerCase().indexOf("_" + keyWrd + "_")) > 0) {
-                        word[i] = "KEYWORD_" + word[i] + "_KEYWORD";
-                    }
+                    // } else if ((indexOfKeyWrd = word[i].toLowerCase().indexOf("_" + keyWrd + "_")) > 0) {
+                    //     word[i] = "KEYWORD_" + word[i] + "_KEYWORD";
+                    // }
                 }
             }
             id.update(String.join(" ", word), index);
@@ -56,7 +57,7 @@ public class KeywordDecorator extends AbstractTextDecorator {
             // throw new EmptyInputFileException("Empty Input File!");
         }
         while (null != strData) {
-            keyWords.add(strData);
+            keyWords.add(strData.trim());
             strData = KeyWordFp.poll();
         }
     }

@@ -16,7 +16,7 @@ public class SentenceDecorator extends AbstractTextDecorator {
     public void processInputDetails() {
         // TODO Auto-generated method stub
         for (String sentence : id.getInputLineList()) {
-            String[] word = sentence.split("\\s");
+            String[] word = sentence.split(" ");
 
             word[0] = "BEGIN_SENTENCE__" + word[0];
             word[word.length - 1] = word[word.length - 1] + "__END_SENTENCE.";

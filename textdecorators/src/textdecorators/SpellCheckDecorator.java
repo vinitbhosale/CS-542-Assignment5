@@ -27,15 +27,15 @@ public class SpellCheckDecorator extends AbstractTextDecorator {
     public void processInputDetails() {
         // TODO Auto-generated method stub
         for (String sentence : id.getInputLineList()) {
-            String[] word = sentence.split("\\s");
+            String[] word = sentence.split(" ");
             for (int i = 0; i < word.length; i++) {
                 for (String spellCheckWrd : spellCheckWords) {
-                    int indexOfKeyWrd = word[i].toLowerCase().indexOf(spellCheckWrd);
+                    int indexOfKeyWrd = word[i].trim().toLowerCase().indexOf(spellCheckWrd);
 
-                    if (indexOfKeyWrd == 0 && word[i].toLowerCase().equals(spellCheckWrd)) {
+                    if (indexOfKeyWrd == 0 && word[i].trim().toLowerCase().equals(spellCheckWrd)) {
                         word[i] = "SPELLCHECK_" + word[i] + "_SPELLCHECK";
 
-                    } else if ((indexOfKeyWrd = word[i].toLowerCase().indexOf("_" + spellCheckWrd + "_")) > 0) {
+                    } else if ((indexOfKeyWrd = word[i].trim().toLowerCase().indexOf("_" + spellCheckWrd + "_")) > 0) {
                         word[i] = "SPELLCHECK_" + word[i] + "_SPELLCHECK";
                     }
                 }
@@ -55,7 +55,7 @@ public class SpellCheckDecorator extends AbstractTextDecorator {
             // throw new EmptyInputFileException("Empty Input File!");
         }
         while (null != strData) {
-            spellCheckWords.add(strData);
+            spellCheckWords.add(strData.trim());
             strData = spellCheckFp.poll();
         }
     }
