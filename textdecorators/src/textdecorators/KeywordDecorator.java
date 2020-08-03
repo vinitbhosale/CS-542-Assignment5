@@ -42,7 +42,6 @@ public class KeywordDecorator extends AbstractTextDecorator {
             }
             id.update(String.join(" ", word), index);
             index += 1;
-
         }
 
         if (null != atd) {
