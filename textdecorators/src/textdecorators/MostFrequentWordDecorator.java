@@ -25,13 +25,13 @@ public class MostFrequentWordDecorator extends AbstractTextDecorator {
         // TODO Auto-generated method stub
 
         freqWordsMap = wordFreqCounter();
-   
         key = mostFrequentWord();
 
         for (String sentence : id.getInputLineList()) {
             String[] wrd = sentence.split(" ");
+
             for (int i = 0; i < wrd.length; i++) {
-                String tempWord = wrd[i].trim().toLowerCase().substring(0, key.length());
+                String tempWord = wrd[i].trim().toLowerCase();
                 if (key.equals(tempWord)) {
                     int wordIndex = wrd[i].toLowerCase().indexOf(key);
                     String temp = wrd[i].substring(0, wordIndex) + "MOST_FREQUENT_"
@@ -47,7 +47,7 @@ public class MostFrequentWordDecorator extends AbstractTextDecorator {
         }
 
         if (null != atd) {
-        atd.processInputDetails();
+            atd.processInputDetails();
         }
     }
 
@@ -55,13 +55,15 @@ public class MostFrequentWordDecorator extends AbstractTextDecorator {
         for (String sentance : id.getInputLineList()) {
             String[] word = sentance.toLowerCase().split(" ");
             for (int i = 0; i < word.length; i++) {
-                if (freqWordsMap.containsKey(word[i].trim())) {
-                    oldValue = freqWordsMap.get(word[i].trim());
-                    freqWordsMap.replace(word[i].trim(), oldValue, oldValue + 1);
-                } else {
-                  
-                    String[] temWrdArr = word[i].trim().split("\\W+");
-                    freqWordsMap.put(temWrdArr[0].trim(), counter);
+                if (!word[i].trim().equals("")) {
+                    if (freqWordsMap.containsKey(word[i].trim())) {
+                        oldValue = freqWordsMap.get(word[i].trim());
+                        freqWordsMap.replace(word[i].trim(), oldValue, oldValue + 1);
+                    } else {
+
+                        String[] temWrdArr = word[i].trim().split("\\W+");
+                        freqWordsMap.put(temWrdArr[0].trim(), counter);
+                    }
                 }
             }
         }

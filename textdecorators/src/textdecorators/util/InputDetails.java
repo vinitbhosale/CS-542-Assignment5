@@ -34,7 +34,7 @@ public class InputDetails implements InputDetailsI, StdoutDisplayInterface, File
         BufferedWriter outputBufferedWriter = new BufferedWriter(new FileWriter(outputFile));
 
         for (String string : inputLines) {
-            outputBufferedWriter.write(string + "\n");
+            outputBufferedWriter.write(string);
         }
 
         outputBufferedWriter.close();
@@ -44,7 +44,7 @@ public class InputDetails implements InputDetailsI, StdoutDisplayInterface, File
     public void writeToStdout() {
         // TODO Auto-generated method stub
         for (String string : inputLines) {
-            System.out.println(string);
+            System.out.print(string);
         }
 
     }
@@ -67,7 +67,7 @@ public class InputDetails implements InputDetailsI, StdoutDisplayInterface, File
         int index = 0;
         strData = fp.poll();
         // Condition to check Empty input file.
-        if(strData == null){
+        if (strData == null) {
             // empty
         }
 
@@ -81,24 +81,25 @@ public class InputDetails implements InputDetailsI, StdoutDisplayInterface, File
             if (strData.indexOf(".") >= 0) {
                 String[] tempStrings = strData.split("\\.");
                 for (int i = 0; i < tempStrings.length - 1; i++) {
-                    temp = temp.concat(tempStrings[i]+"\n");
+
+                    temp = temp.concat(tempStrings[i]);
                     inputLines.add(temp);
                     temp = "";
                 }
-                temp = temp.concat(tempStrings[tempStrings.length - 1]);
+                temp = tempStrings.length == 0 ? temp : temp.concat(tempStrings[tempStrings.length - 1]);
                 if (strData.lastIndexOf(".") == strData.length() - 1) {
                     inputLines.add(temp);
                     temp = "";
                 }
 
             } else {
-                temp = temp.concat(strData+"\n");
+                temp = temp.concat(strData + "\n");
             }
             strData = fp.poll();
         }
-        
+
         // for (String string : inputLines) {
-        //     System.out.print(string);
+        // System.out.print(string);
         // }
     }
 

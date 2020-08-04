@@ -71,7 +71,7 @@ public class Driver {
 
              mostFreqWordDecorator.processInputDetails();
             ((StdoutDisplayInterface) inputD).writeToStdout();
-            // ((FileDisplayInterface) inputD).writeToFile();
+            ((FileDisplayInterface) inputD).writeToFile();
         } catch (InvalidPathException | IOException | SameFileNameException e) {
             System.err.println(e.getMessage());
         }

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import textdecorators.util.FileProcessor;
 import textdecorators.util.InputDetailsI;
 
@@ -42,10 +41,12 @@ public class KeywordDecorator extends AbstractTextDecorator {
 
                             String temp = "";
                             if (mostFreqWrdIndex > -1) {
-                                temp = wordsArr[i].substring(0, mostFreqWrdIndex + mostFreq.length()) + "KEYWORD_"
-                                        + wordsArr[i].substring(wordIndex, wordIndex + keyWrd.length()) + "_KEYWORD"
+                                temp = wordsArr[i].substring(0, mostFreqWrdIndex) + "KEYWORD_"
+                                        + wordsArr[i].substring(mostFreqWrdIndex, mostFreqWrdIndex + mostFreq.length())
+                                        + wordsArr[i].substring(wordIndex, wordIndex + keyWrd.length())
                                         + wordsArr[i].substring(wordIndex + keyWrd.length(),
-                                                wordIndex + keyWrd.length() + mostFreq.length());
+                                                wordIndex + keyWrd.length() + mostFreq.length())
+                                        + "_KEYWORD";
 
                                 temp = wordIndex + keyWrd.length() + mostFreq.length() == wordsArr[i].length() ? temp
                                         : temp + wordsArr[i].substring(wordIndex + keyWrd.length() + mostFreq.length());
@@ -69,7 +70,7 @@ public class KeywordDecorator extends AbstractTextDecorator {
         }
 
         if (null != atd) {
-            // atd.processInputDetails();
+             atd.processInputDetails();
         }
     }
 

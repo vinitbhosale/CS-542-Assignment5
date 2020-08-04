@@ -13,7 +13,7 @@ public class SpellCheckDecorator extends AbstractTextDecorator {
     private FileProcessor spellCheckFp;
     private String strData;
     private List<String> spellCheckWords = new ArrayList<>();
-    private int index=0;
+    private int index = 0;
 
     public SpellCheckDecorator(AbstractTextDecorator atdIn, InputDetailsI idIn, FileProcessor inSpellCheckFp)
             throws IOException {
@@ -27,23 +27,78 @@ public class SpellCheckDecorator extends AbstractTextDecorator {
     public void processInputDetails() {
         // TODO Auto-generated method stub
         for (String sentence : id.getInputLineList()) {
-            String[] word = sentence.split(" ");
-            for (int i = 0; i < word.length; i++) {
-                for (String spellCheckWrd : spellCheckWords) {
-                    int indexOfKeyWrd = word[i].trim().toLowerCase().indexOf(spellCheckWrd);
+            String[] wordArr = sentence.split(" ");
+            for (int i = 0; i < wordArr.length; i++) {
+                String[] tempWrd = wordArr[i].split("[^a-zA-Z0-9]");
+                for (String wrd : tempWrd) {
+                    for (String spellCheckWrd : spellCheckWords) {
+                        if (wrd.toLowerCase().trim().equals(spellCheckWrd.trim())) {
+                            String keyWrd = "KEYWORD_";
+                            String mostFreq = "MOST_FREQUENT_";
+                            int keyWrdIndex = wordArr[i].indexOf(keyWrd);
+                            int mostFreqWrdIndex = wordArr[i].indexOf(mostFreq);
+                            int wordIndex = wordArr[i].toLowerCase().indexOf(spellCheckWrd);
 
-                    if (indexOfKeyWrd == 0 && word[i].trim().toLowerCase().equals(spellCheckWrd)) {
-                        word[i] = "SPELLCHECK_" + word[i] + "_SPELLCHECK";
+                            String temp = "";
+                            if (keyWrdIndex > -1 && mostFreqWrdIndex > -1) {
 
-                    } else if ((indexOfKeyWrd = word[i].trim().toLowerCase().indexOf("_" + spellCheckWrd + "_")) > 0) {
-                        word[i] = "SPELLCHECK_" + word[i] + "_SPELLCHECK";
+                                temp = wordArr[i].substring(0, keyWrdIndex) + "SPELLCHECK_"
+                                        + wordArr[i].substring(keyWrdIndex, keyWrdIndex + keyWrd.length())
+                                        + wordArr[i].substring(mostFreqWrdIndex, mostFreqWrdIndex + mostFreq.length())
+                                        + wordArr[i].substring(wordIndex, wordIndex + spellCheckWrd.length())
+                                        + wordArr[i].substring(wordIndex + spellCheckWrd.length(), wordIndex
+                                                + spellCheckWrd.length() + mostFreq.length() + keyWrd.length())
+                                        + "_SPELLCHECK";
+                                temp = wordIndex + spellCheckWrd.length() + keyWrd.length()
+                                        + mostFreq.length() == wordArr[i].length() ? temp
+                                                : temp + wordArr[i].substring(wordIndex + spellCheckWrd.length()
+                                                        + keyWrd.length() + mostFreq.length());
+                            } else if (mostFreqWrdIndex > -1) {
+                                temp = wordArr[i].substring(0, mostFreqWrdIndex) + "SPELLCHECK_"
+                                        + wordArr[i].substring(mostFreqWrdIndex, mostFreqWrdIndex + mostFreq.length())
+                                        + wordArr[i].substring(wordIndex, wordIndex + spellCheckWrd.length())
+                                        + wordArr[i].substring(wordIndex + spellCheckWrd.length(),
+                                                wordIndex + spellCheckWrd.length() + mostFreq.length())
+                                        + "_SPELLCHECK";
+                                temp = wordIndex + spellCheckWrd.length() + mostFreq.length() == wordArr[i].length() ? temp
+                                        : temp + wordArr[i].substring(wordIndex + spellCheckWrd.length() + mostFreq.length());
+                            } else if (keyWrdIndex > -1) {
+                                temp = wordArr[i].substring(0, keyWrdIndex) + "SPELLCHECK_"
+                                        + wordArr[i].substring(keyWrdIndex, keyWrdIndex + keyWrd.length())
+                                        + wordArr[i].substring(wordIndex, wordIndex + spellCheckWrd.length())
+                                        + wordArr[i].substring(wordIndex + spellCheckWrd.length(),
+                                                wordIndex + spellCheckWrd.length() + keyWrd.length())
+                                        + "_SPELLCHECK";
+
+                                temp = wordIndex + spellCheckWrd.length() + keyWrd.length() == wordArr[i].length()
+                                        ? temp
+                                        : temp + wordArr[i]
+                                                .substring(wordIndex + spellCheckWrd.length() + keyWrd.length());
+
+                            } else {
+
+                                temp = wordArr[i].substring(0, wordIndex) + "SPELLCHECK_"
+                                        + wordArr[i].substring(wordIndex, wordIndex + spellCheckWrd.length())
+                                        + "_SPELLCHECK";
+                                temp = wordIndex + spellCheckWrd.length() == wordArr[i].length() ? temp
+                                        : temp + wordArr[i].substring(wordIndex + spellCheckWrd.length());
+
+                            }
+
+                            wordArr[i] = temp;
+                            break;
+                        }
+
                     }
                 }
+
             }
-            id.update(String.join(" ", word), index);
+            id.update(String.join(" ", wordArr), index);
             index += 1;
         }
-        if (null != atd) {
+        if (null != atd)
+
+        {
             atd.processInputDetails();
         }
     }
@@ -59,5 +114,5 @@ public class SpellCheckDecorator extends AbstractTextDecorator {
             strData = spellCheckFp.poll();
         }
     }
-    
+
 }
