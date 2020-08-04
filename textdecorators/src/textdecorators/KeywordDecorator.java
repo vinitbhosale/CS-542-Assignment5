@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import textdecorators.util.FileProcessor;
 import textdecorators.util.InputDetailsI;
 
@@ -27,26 +28,48 @@ public class KeywordDecorator extends AbstractTextDecorator {
     public void processInputDetails() {
 
         for (String sentence : id.getInputLineList()) {
-            String[] word = sentence.split(" ");
-            for (int i = 0; i < word.length; i++) {
-                //System.out.println("Kenny="+word[i]+"=kenny");
-                for (String keyWrd : keyWords) {
-                    int indexOfKeyWrd = word[i].toLowerCase().indexOf(keyWrd);
-                    
-                    // if (indexOfKeyWrd == 0 && word[i].toLowerCase().equals(keyWrd)) {
-                    //     word[i] = "KEYWORD_" + word[i] + "_KEYWORD";
+            String[] wordsArr = sentence.split(" ");
+            for (int i = 0; i < wordsArr.length; i++) {
+                String[] tempWrd = wordsArr[i].split("[^a-zA-Z0-9]");
+                for (String wrd : tempWrd) {
+                    for (String keyWrd : keyWords) {
+                        if (wrd.toLowerCase().trim().equals(keyWrd.trim())) {
 
-                    // } else if ((indexOfKeyWrd = word[i].toLowerCase().indexOf("_" + keyWrd + "_")) > 0) {
-                    //     word[i] = "KEYWORD_" + word[i] + "_KEYWORD";
-                    // }
+                            String mostFreq = "MOST_FREQUENT_";
+                            int mostFreqWrdIndex = wordsArr[i].indexOf(mostFreq);
+
+                            int wordIndex = wordsArr[i].toLowerCase().indexOf(keyWrd);
+
+                            String temp = "";
+                            if (mostFreqWrdIndex > -1) {
+                                temp = wordsArr[i].substring(0, mostFreqWrdIndex + mostFreq.length()) + "KEYWORD_"
+                                        + wordsArr[i].substring(wordIndex, wordIndex + keyWrd.length()) + "_KEYWORD"
+                                        + wordsArr[i].substring(wordIndex + keyWrd.length(),
+                                                wordIndex + keyWrd.length() + mostFreq.length());
+
+                                temp = wordIndex + keyWrd.length() + mostFreq.length() == wordsArr[i].length() ? temp
+                                        : temp + wordsArr[i].substring(wordIndex + keyWrd.length() + mostFreq.length());
+                            } else {
+                                temp = wordsArr[i].substring(0, wordIndex) + "KEYWORD_"
+                                        + wordsArr[i].substring(wordIndex, wordIndex + keyWrd.length()) + "_KEYWORD";
+                                temp = wordIndex + keyWrd.length() == wordsArr[i].length() ? temp
+                                        : temp + wordsArr[i].substring(wordIndex + keyWrd.length());
+                            }
+
+                            wordsArr[i] = temp;
+                            break;
+                        }
+                    }
+
                 }
+
             }
-            id.update(String.join(" ", word), index);
+            id.update(String.join(" ", wordsArr), index);
             index += 1;
         }
 
         if (null != atd) {
-            atd.processInputDetails();
+            // atd.processInputDetails();
         }
     }
 

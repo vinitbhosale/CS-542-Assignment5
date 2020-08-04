@@ -70,7 +70,7 @@ public class Driver {
             AbstractTextDecorator mostFreqWordDecorator = new MostFrequentWordDecorator(keywordDecorator, inputD);
 
              mostFreqWordDecorator.processInputDetails();
-            //((StdoutDisplayInterface) inputD).writeToStdout();
+            ((StdoutDisplayInterface) inputD).writeToStdout();
             // ((FileDisplayInterface) inputD).writeToFile();
         } catch (InvalidPathException | IOException | SameFileNameException e) {
             System.err.println(e.getMessage());

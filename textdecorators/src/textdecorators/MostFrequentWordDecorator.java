@@ -25,14 +25,14 @@ public class MostFrequentWordDecorator extends AbstractTextDecorator {
         // TODO Auto-generated method stub
 
         freqWordsMap = wordFreqCounter();
-        System.out.println(freqWordsMap);
+   
         key = mostFrequentWord();
 
         for (String sentence : id.getInputLineList()) {
             String[] wrd = sentence.split(" ");
             for (int i = 0; i < wrd.length; i++) {
-
-                if (key.equals(wrd[i].toLowerCase().trim())) {
+                String tempWord = wrd[i].trim().toLowerCase().substring(0, key.length());
+                if (key.equals(tempWord)) {
                     int wordIndex = wrd[i].toLowerCase().indexOf(key);
                     String temp = wrd[i].substring(0, wordIndex) + "MOST_FREQUENT_"
                             + wrd[i].substring(wordIndex, wordIndex + key.length()) + "_MOST_FREQUENT";
