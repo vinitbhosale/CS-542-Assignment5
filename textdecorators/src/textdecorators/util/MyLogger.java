@@ -7,12 +7,11 @@ public class MyLogger {
      * DebugValue = 1 (For DRIVER class) 
      * DebugValue = 2 (For CONSTRUCTOR) 
      * DebugValue = 3 (For FILEPROCESSOR class) 
-     * DebugValue = 4 ()
-     * DebugValue = 5 () 
-     * DebugValue = 6 () 
-     * DebugValue = 7 () 
-     * DebugValue = 8 () 
-     * DebugValue = 9 (For RESULTS class)
+     * DebugValue = 4 (For INPUTDETAILS class)
+     * DebugValue = 5 (For MOSTFREQUENTWORDDECORATOR class) 
+     * DebugValue = 6 (For KEYWORDDECORATOR class) 
+     * DebugValue = 7 (For SPELLCHECKDECORATOR class) 
+     * DebugValue = 8 (For SENTENCEDECORATOR class) 
      */
     private static MyLogger uniqueInstance = new MyLogger();
 
@@ -25,8 +24,8 @@ public class MyLogger {
     }
 
     public static enum DebugLevel {
-        DRIVER, CONSTRUCTOR, FILEPROCESSOR, COMMONINTSVISITOR, MISSINGINTSVISITOR, POPULATEMYARRAYVISITOR, MYARRAY,
-        MYARRAYLIST, RESULTS, NONE
+        DRIVER, CONSTRUCTOR, FILEPROCESSOR, INPUTDETAILS, MOSTFREQUENTWORDDECORATOR, KEYWORDDECORATOR, SPELLCHECKDECORATOR,
+        SENTENCEDECORATOR, NONE
     };
 
     private static DebugLevel debugLevel;
@@ -43,22 +42,19 @@ public class MyLogger {
                 debugLevel = DebugLevel.FILEPROCESSOR;
                 break;
             case 4:
-                debugLevel = DebugLevel.COMMONINTSVISITOR;
+                debugLevel = DebugLevel.INPUTDETAILS;
                 break;
             case 5:
-                debugLevel = DebugLevel.MISSINGINTSVISITOR;
+                debugLevel = DebugLevel.MOSTFREQUENTWORDDECORATOR;
                 break;
             case 6:
-                debugLevel = DebugLevel.POPULATEMYARRAYVISITOR;
+                debugLevel = DebugLevel.KEYWORDDECORATOR;
                 break;
             case 7:
-                debugLevel = DebugLevel.MYARRAY;
+                debugLevel = DebugLevel.SPELLCHECKDECORATOR;
                 break;
             case 8:
-                debugLevel = DebugLevel.MYARRAYLIST;
-                break;
-            case 9:
-                debugLevel = DebugLevel.RESULTS;
+                debugLevel = DebugLevel.SENTENCEDECORATOR;
                 break;
             default:
                 debugLevel = DebugLevel.NONE;

@@ -9,7 +9,9 @@ import textdecorators.KeywordDecorator;
 import textdecorators.MostFrequentWordDecorator;
 import textdecorators.SentenceDecorator;
 import textdecorators.SpellCheckDecorator;
+import textdecorators.userException.EmptyInputFileException;
 import textdecorators.userException.SameFileNameException;
+import textdecorators.userException.SpecialCharException;
 import textdecorators.util.FileProcessor;
 import textdecorators.util.InputDetails;
 import textdecorators.util.InputDetailsI;
@@ -17,9 +19,14 @@ import textdecorators.util.MyLogger;
 import textdecorators.util.StdoutDisplayInterface;
 import textdecorators.util.FileDisplayInterface;
 
+/**
+ * Driver class start point.
+ * 
+ * @author Vint S Bhosale
+ */
 public class Driver {
-    public static void main(String[] args)
-            throws InvalidPathException, FileNotFoundException, IOException, SameFileNameException {
+    public static void main(String[] args) throws InvalidPathException, FileNotFoundException, IOException,
+            SameFileNameException, SpecialCharException, EmptyInputFileException {
         try {
             /*
              * As the build.xml specifies the arguments as input, misspelled,keywords,
@@ -58,19 +65,28 @@ public class Driver {
             MyLogger.getInstnace().setDebugValue(Integer.parseInt(args[4]));
             MyLogger.getInstnace().writeMessage("Setting debug level to " + args[4], MyLogger.DebugLevel.DRIVER);
 
+            // Initializing FileProcessor objects for input,keyword and misspelled file.
             FileProcessor fp = new FileProcessor(args[0]);
             FileProcessor keyWordFp = new FileProcessor(args[2]);
             FileProcessor spellCheckFp = new FileProcessor(args[1]);
-
+            
+            // Intializing InputDetails object for decorator.
             InputDetailsI inputD = new InputDetails(fp, args[3]);
             
+            // Initializing Decorator objects.
             AbstractTextDecorator sentenceDecorator = new SentenceDecorator(null, inputD);
             AbstractTextDecorator spellCheckDecorator = new SpellCheckDecorator(sentenceDecorator, inputD, spellCheckFp);
             AbstractTextDecorator keywordDecorator = new KeywordDecorator(spellCheckDecorator, inputD, keyWordFp);
             AbstractTextDecorator mostFreqWordDecorator = new MostFrequentWordDecorator(keywordDecorator, inputD);
 
-             mostFreqWordDecorator.processInputDetails();
+            // Calling processInputDetails of mostFreqWordDecorator.
+            MyLogger.getInstnace().writeMessage("Calling mostFreqWordDecorator processInputDetails method.", MyLogger.DebugLevel.DRIVER);
+            mostFreqWordDecorator.processInputDetails();
+            // Calling writeToStdout to display out on stdout.
+            MyLogger.getInstnace().writeMessage("Displaying output to stdout.", MyLogger.DebugLevel.DRIVER);
             ((StdoutDisplayInterface) inputD).writeToStdout();
+            // Calling writeToFile to write output in output file.
+            MyLogger.getInstnace().writeMessage("Writing output to output.txt file.", MyLogger.DebugLevel.DRIVER);
             ((FileDisplayInterface) inputD).writeToFile();
         } catch (InvalidPathException | IOException | SameFileNameException e) {
             System.err.println(e.getMessage());

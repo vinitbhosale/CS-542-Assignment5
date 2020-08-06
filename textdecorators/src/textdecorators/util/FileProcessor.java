@@ -8,7 +8,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
-
+/**
+* FileProcessor is a utility to be used to read in the contents of the input file.
+*
+*
+* @author Vinit S Bhosale
+*/
 public class FileProcessor {
     private BufferedReader reader;
 
