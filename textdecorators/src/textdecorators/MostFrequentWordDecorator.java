@@ -154,4 +154,12 @@ public class MostFrequentWordDecorator extends AbstractTextDecorator {
 
     }
 
+    @Override
+    public String toString() {
+        return "Class: MostFrequentWordDecorator, Data members: [atd=" + atd.toString() + "id=" + id.toString()
+                + "counter=" + counter + "oldValue=" + oldValue + "value=" + value + "mostFreqWrdkey="
+                + mostFreqWrdkey.toString() + "index=" + index + "]";
+
+    }
+
 }

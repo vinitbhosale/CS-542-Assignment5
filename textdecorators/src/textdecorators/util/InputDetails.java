@@ -165,4 +165,13 @@ public class InputDetails implements InputDetailsI, StdoutDisplayInterface, File
 
     }
 
+    @Override
+
+    public String toString() {
+        return "Class: InputDetails, Data members: [fp = " + fp.toString() + "outputFile=" + outputFile.toString()
+                + "strData=" + strData.toString() + "inputLines=" + inputLines.toString() + "temp=" + temp.toString()
+                + "]";
+
+    }
+
 }
