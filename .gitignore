@@ -1,3 +1,5 @@
 .*
 !.gitignore
 **/BUILD/
+**/log.txt
+**/output.txt
