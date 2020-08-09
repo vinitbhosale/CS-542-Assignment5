@@ -41,11 +41,11 @@ public class KeywordDecorator extends AbstractTextDecorator {
      */
     public KeywordDecorator(AbstractTextDecorator atdIn, InputDetailsI idIn, FileProcessor inKeyWordFp)
             throws IOException, EmptyInputFileException {
-        MyLogger.getInstnace().writeMessage("KeywordDecorator construtor.", MyLogger.DebugLevel.CONSTRUCTOR);
+        MyLogger.getInstnace().writeMessage("KeywordDecorator construtor."+"\n", MyLogger.DebugLevel.CONSTRUCTOR);
         atd = atdIn;
         id = idIn;
         keyWordFp = inKeyWordFp;
-        MyLogger.getInstnace().writeMessage("KeywordDecorator processing input file.", MyLogger.DebugLevel.CONSTRUCTOR);
+        MyLogger.getInstnace().writeMessage("KeywordDecorator processing input file."+"\n", MyLogger.DebugLevel.CONSTRUCTOR);
         // Call to keywordFileProcessor method to process keyword text file.
         keywordFileProcessor(keyWordFp);
     }
@@ -54,13 +54,15 @@ public class KeywordDecorator extends AbstractTextDecorator {
      * processInputDetails method that matches the keywords from keyword file with
      * words in the sentence stored in the inputLines list in inputdetails class and
      * decorates those words with KEYWORD_ and _KEYWORD.
+     * 
+     * @throws IOException
      */
     @Override
-    public void processInputDetails() {
+    public void processInputDetails() throws IOException {
         // TODO Auto-generated method stub
-        MyLogger.getInstnace().writeMessage("KeywordDecorator processInputDetails call.",
+        MyLogger.getInstnace().writeMessage("KeywordDecorator processInputDetails call."+"\n",
                 MyLogger.DebugLevel.KEYWORDDECORATOR);
-        MyLogger.getInstnace().writeMessage("KeywordDecorator decorating the word.",
+        MyLogger.getInstnace().writeMessage("KeywordDecorator decorating the word."+"\n",
                 MyLogger.DebugLevel.KEYWORDDECORATOR);
         // Looping through each sentence from the list.
         for (String sentence : id.getInputLineList()) {
@@ -111,14 +113,14 @@ public class KeywordDecorator extends AbstractTextDecorator {
                 }
 
             }
-            MyLogger.getInstnace().writeMessage("KeywordDecorator updating sentence in inputLines list.",
+            MyLogger.getInstnace().writeMessage("KeywordDecorator updating sentence in inputLines list."+"\n",
                     MyLogger.DebugLevel.KEYWORDDECORATOR);
             // Updating the word in the sentence at perticular index of the list stored in
             // inputDetails class.
             id.update(String.join(" ", wordsArr), index);
             index += 1;
         }
-        MyLogger.getInstnace().writeMessage("KeywordDecorator calling SpellCheckDecorator.",
+        MyLogger.getInstnace().writeMessage("KeywordDecorator calling SpellCheckDecorator."+"\n",
                 MyLogger.DebugLevel.KEYWORDDECORATOR);
         // Condition to check atd contains a decorator.
         if (null != atd) {

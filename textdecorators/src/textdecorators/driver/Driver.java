@@ -63,31 +63,34 @@ public class Driver {
 
             // Setting debug value in MyLogger.
             MyLogger.getInstnace().setDebugValue(Integer.parseInt(args[4]));
-            MyLogger.getInstnace().writeMessage("Setting debug level to " + args[4], MyLogger.DebugLevel.DRIVER);
+            MyLogger.getInstnace().writeMessage("Setting debug level to " + args[4]+"\n", MyLogger.DebugLevel.DRIVER);
 
             // Initializing FileProcessor objects for input,keyword and misspelled file.
             FileProcessor fp = new FileProcessor(args[0]);
             FileProcessor keyWordFp = new FileProcessor(args[2]);
             FileProcessor spellCheckFp = new FileProcessor(args[1]);
-            
+
             // Intializing InputDetails object for decorator.
             InputDetailsI inputD = new InputDetails(fp, args[3]);
-            
+
             // Initializing Decorator objects.
             AbstractTextDecorator sentenceDecorator = new SentenceDecorator(null, inputD);
-            AbstractTextDecorator spellCheckDecorator = new SpellCheckDecorator(sentenceDecorator, inputD, spellCheckFp);
+            AbstractTextDecorator spellCheckDecorator = new SpellCheckDecorator(sentenceDecorator, inputD,
+                    spellCheckFp);
             AbstractTextDecorator keywordDecorator = new KeywordDecorator(spellCheckDecorator, inputD, keyWordFp);
             AbstractTextDecorator mostFreqWordDecorator = new MostFrequentWordDecorator(keywordDecorator, inputD);
 
             // Calling processInputDetails of mostFreqWordDecorator.
-            MyLogger.getInstnace().writeMessage("Calling mostFreqWordDecorator processInputDetails method.", MyLogger.DebugLevel.DRIVER);
+            MyLogger.getInstnace().writeMessage("Calling mostFreqWordDecorator processInputDetails method."+"\n",
+                    MyLogger.DebugLevel.DRIVER);
             mostFreqWordDecorator.processInputDetails();
             // Calling writeToStdout to display out on stdout.
-            MyLogger.getInstnace().writeMessage("Displaying output to stdout.", MyLogger.DebugLevel.DRIVER);
+            MyLogger.getInstnace().writeMessage("Displaying output to stdout."+"\n", MyLogger.DebugLevel.DRIVER);
             ((StdoutDisplayInterface) inputD).writeToStdout();
             // Calling writeToFile to write output in output file.
-            MyLogger.getInstnace().writeMessage("Writing output to output.txt file.", MyLogger.DebugLevel.DRIVER);
+            MyLogger.getInstnace().writeMessage("Writing output to output.txt file."+"\n", MyLogger.DebugLevel.DRIVER);
             ((FileDisplayInterface) inputD).writeToFile();
+            MyLogger.getInstnace().closeFile();
         } catch (InvalidPathException | IOException | SameFileNameException e) {
             System.err.println(e.getMessage());
         }

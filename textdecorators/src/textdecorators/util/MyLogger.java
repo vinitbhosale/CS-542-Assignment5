@@ -1,21 +1,26 @@
 package textdecorators.util;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class MyLogger {
     /**
      * MyLogger class
      * 
-     * DebugValue = 1 (For DRIVER class) 
-     * DebugValue = 2 (For CONSTRUCTOR) 
-     * DebugValue = 3 (For FILEPROCESSOR class) 
-     * DebugValue = 4 (For INPUTDETAILS class)
-     * DebugValue = 5 (For MOSTFREQUENTWORDDECORATOR class) 
-     * DebugValue = 6 (For KEYWORDDECORATOR class) 
-     * DebugValue = 7 (For SPELLCHECKDECORATOR class) 
-     * DebugValue = 8 (For SENTENCEDECORATOR class) 
+     * DebugValue = 1 (For DRIVER class) DebugValue = 2 (For CONSTRUCTOR) DebugValue
+     * = 3 (For FILEPROCESSOR class) DebugValue = 4 (For INPUTDETAILS class)
+     * DebugValue = 5 (For MOSTFREQUENTWORDDECORATOR class) DebugValue = 6 (For
+     * KEYWORDDECORATOR class) DebugValue = 7 (For SPELLCHECKDECORATOR class)
+     * DebugValue = 8 (For SENTENCEDECORATOR class)
      */
     private static MyLogger uniqueInstance = new MyLogger();
+    private File outputFile = new File("log.txt");
+    private BufferedWriter outputBufferedWriter;
 
     private MyLogger() {
+
     }
 
     public static MyLogger getInstnace() {
@@ -24,8 +29,8 @@ public class MyLogger {
     }
 
     public static enum DebugLevel {
-        DRIVER, CONSTRUCTOR, FILEPROCESSOR, INPUTDETAILS, MOSTFREQUENTWORDDECORATOR, KEYWORDDECORATOR, SPELLCHECKDECORATOR,
-        SENTENCEDECORATOR, NONE
+        DRIVER, CONSTRUCTOR, FILEPROCESSOR, INPUTDETAILS, MOSTFREQUENTWORDDECORATOR, KEYWORDDECORATOR,
+        SPELLCHECKDECORATOR, SENTENCEDECORATOR, NONE
     };
 
     private static DebugLevel debugLevel;
@@ -66,9 +71,20 @@ public class MyLogger {
         MyLogger.debugLevel = indebugValue;
     }
 
-    public void writeMessage(String message, DebugLevel levelIn) {
-        if (levelIn == debugLevel)
-            System.out.println(message);
+    public void writeMessage(String message, DebugLevel levelIn) throws IOException {
+        if (levelIn == debugLevel) {
+            if (!outputFile.exists()) {
+                outputFile.createNewFile();
+            }
+            if (outputBufferedWriter == null) {
+                outputBufferedWriter = new BufferedWriter(new FileWriter(outputFile));
+            }
+            outputBufferedWriter.write(message);
+        }
+    }
+
+    public void closeFile() throws IOException {
+        outputBufferedWriter.close();
     }
 
     public String toString() {

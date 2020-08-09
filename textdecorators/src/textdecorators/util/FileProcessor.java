@@ -30,11 +30,11 @@ public class FileProcessor {
      */
     public FileProcessor(String inputFilePath)
             throws InvalidPathException, SecurityException, FileNotFoundException, IOException {
-        MyLogger.getInstnace().writeMessage("FileProcessor constructor.", MyLogger.DebugLevel.CONSTRUCTOR);
+        MyLogger.getInstnace().writeMessage("FileProcessor constructor."+"\n", MyLogger.DebugLevel.CONSTRUCTOR);
         if (!Files.exists(Paths.get(inputFilePath))) {
             throw new FileNotFoundException("invalid input file or input file in incorrect location");
         }
-        MyLogger.getInstnace().writeMessage("Bufferreader object reader intiatizing.", MyLogger.DebugLevel.CONSTRUCTOR);
+        MyLogger.getInstnace().writeMessage("Bufferreader object reader intiatizing."+"\n", MyLogger.DebugLevel.CONSTRUCTOR);
         reader = new BufferedReader(new FileReader(new File(inputFilePath)));
     }
 
@@ -45,7 +45,7 @@ public class FileProcessor {
      * @exception IOException On error encountered when reading from input file.
      */
     public String poll() throws IOException {
-        MyLogger.getInstnace().writeMessage("Poll method reading one line from file\n",MyLogger.DebugLevel.FILEPROCESSOR);
+        MyLogger.getInstnace().writeMessage("Poll method reading one line from file"+"\n",MyLogger.DebugLevel.FILEPROCESSOR);
         return reader.readLine();
     }
 
@@ -55,7 +55,7 @@ public class FileProcessor {
      * @exception IOException On error encountered when closing the buffered reader.
      */
     public void close() throws IOException {
-        MyLogger.getInstnace().writeMessage("Closing reader.", MyLogger.DebugLevel.FILEPROCESSOR);
+        MyLogger.getInstnace().writeMessage("Closing reader."+"\n", MyLogger.DebugLevel.FILEPROCESSOR);
         reader.close();
     }
 }

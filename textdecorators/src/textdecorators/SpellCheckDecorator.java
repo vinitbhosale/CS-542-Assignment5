@@ -39,11 +39,11 @@ public class SpellCheckDecorator extends AbstractTextDecorator {
          */
         public SpellCheckDecorator(AbstractTextDecorator atdIn, InputDetailsI idIn, FileProcessor inSpellCheckFp)
                         throws IOException {
-                MyLogger.getInstnace().writeMessage("SpellCheckDecorator construtor.", MyLogger.DebugLevel.CONSTRUCTOR);
+                MyLogger.getInstnace().writeMessage("SpellCheckDecorator construtor."+"\n", MyLogger.DebugLevel.CONSTRUCTOR);
                 atd = atdIn;
                 id = idIn;
                 spellCheckFp = inSpellCheckFp;
-                MyLogger.getInstnace().writeMessage("SpellCheckDecorator processing misspelled file.",
+                MyLogger.getInstnace().writeMessage("SpellCheckDecorator processing misspelled file."+"\n",
                                 MyLogger.DebugLevel.CONSTRUCTOR);
                 spellCheckFileProcessor(spellCheckFp);
         }
@@ -52,13 +52,15 @@ public class SpellCheckDecorator extends AbstractTextDecorator {
          * processInputDetails method that matches the words from misspelled file with
          * words in the sentence stored in the inputLines list in inputdetails class and
          * decorates those words with SPELLCHECK_ and _SPELLCHECK.
+         * 
+         * @throws IOException
          */
         @Override
-        public void processInputDetails() {
+        public void processInputDetails() throws IOException {
                 // TODO Auto-generated method stub
-                MyLogger.getInstnace().writeMessage("SpellCheckDecorator processInputDetails call.",
+                MyLogger.getInstnace().writeMessage("SpellCheckDecorator processInputDetails call."+"\n",
                                 MyLogger.DebugLevel.SPELLCHECKDECORATOR);
-                MyLogger.getInstnace().writeMessage("SpellCheckDecorator decorating the word.",
+                MyLogger.getInstnace().writeMessage("SpellCheckDecorator decorating the word."+"\n",
                                 MyLogger.DebugLevel.SPELLCHECKDECORATOR);
                 // Looping through each sentence from the list.
                 for (String sentence : id.getInputLineList()) {
@@ -196,14 +198,14 @@ public class SpellCheckDecorator extends AbstractTextDecorator {
                                 }
 
                         }
-                        MyLogger.getInstnace().writeMessage("SpellCheckDecorator updating sentence in inputLines list.",
+                        MyLogger.getInstnace().writeMessage("SpellCheckDecorator updating sentence in inputLines list."+"\n",
                                         MyLogger.DebugLevel.SPELLCHECKDECORATOR);
                         // Updating the word in the sentence at perticular index of the list stored in
                         // inputDetails class.
                         id.update(String.join(" ", wordArr), index);
                         index += 1;
                 }
-                MyLogger.getInstnace().writeMessage("SpellCheckDecorator calling SentenceDecorator.",
+                MyLogger.getInstnace().writeMessage("SpellCheckDecorator calling SentenceDecorator."+"\n",
                                 MyLogger.DebugLevel.SPELLCHECKDECORATOR);
                 // Condition to check atd contains a decorator.
                 if (null != atd) {

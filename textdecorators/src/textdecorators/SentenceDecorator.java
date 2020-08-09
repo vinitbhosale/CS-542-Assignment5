@@ -1,5 +1,7 @@
 package textdecorators;
 
+import java.io.IOException;
+
 import textdecorators.util.InputDetailsI;
 import textdecorators.util.MyLogger;
 
@@ -21,9 +23,10 @@ public class SentenceDecorator extends AbstractTextDecorator {
      * 
      * @param atdIn - AbstractTextDecorator obj.
      * @param idIn  - InputDetailsI obj.
+     * @throws IOException
      */
-    public SentenceDecorator(AbstractTextDecorator atdIn, InputDetailsI idIn) {
-        MyLogger.getInstnace().writeMessage("SentenceDecorator construtor.", MyLogger.DebugLevel.CONSTRUCTOR);
+    public SentenceDecorator(AbstractTextDecorator atdIn, InputDetailsI idIn) throws IOException {
+        MyLogger.getInstnace().writeMessage("SentenceDecorator construtor."+"\n", MyLogger.DebugLevel.CONSTRUCTOR);
         atd = atdIn;
         id = idIn;
     }
@@ -31,17 +34,19 @@ public class SentenceDecorator extends AbstractTextDecorator {
     /**
      * processInputDetails method that decorates sentence with SPELLCHECK_ and
      * _SPELLCHECK.
+     * 
+     * @throws IOException
      */
     @Override
-    public void processInputDetails() {
+    public void processInputDetails() throws IOException {
         // TODO Auto-generated method stub
-        MyLogger.getInstnace().writeMessage("SentenceDecorator processInputDetails call.",
+        MyLogger.getInstnace().writeMessage("SentenceDecorator processInputDetails call."+"\n",
                 MyLogger.DebugLevel.SENTENCEDECORATOR);
-        MyLogger.getInstnace().writeMessage("SentenceDecorator decorating the word.",
+        MyLogger.getInstnace().writeMessage("SentenceDecorator decorating the word."+"\n",
                 MyLogger.DebugLevel.SENTENCEDECORATOR);
         // Looping through each sentence from the list.
         for (String sentence : id.getInputLineList()) {
-            MyLogger.getInstnace().writeMessage("SentenceDecorator updating sentence in inputLines list.",
+            MyLogger.getInstnace().writeMessage("SentenceDecorator updating sentence in inputLines list."+"\n",
                     MyLogger.DebugLevel.SENTENCEDECORATOR);
             id.update("BEGIN_SENTENCE__" + sentence.substring(0, sentence.length() - 1) + "__END_SENTENCE.", index);
             index += 1;

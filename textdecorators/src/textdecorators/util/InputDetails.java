@@ -44,10 +44,10 @@ public class InputDetails implements InputDetailsI, StdoutDisplayInterface, File
      */
     public InputDetails(FileProcessor inFp, String inOutputFile)
             throws IOException, SpecialCharException, EmptyInputFileException {
-        MyLogger.getInstnace().writeMessage("InputDetails constructor.", MyLogger.DebugLevel.CONSTRUCTOR);
+        MyLogger.getInstnace().writeMessage("InputDetails constructor."+"\n", MyLogger.DebugLevel.CONSTRUCTOR);
         fp = inFp;
         outputFilePath = inOutputFile;
-        MyLogger.getInstnace().writeMessage("InputDetails processing input file.", MyLogger.DebugLevel.CONSTRUCTOR);
+        MyLogger.getInstnace().writeMessage("InputDetails processing input file."+"\n", MyLogger.DebugLevel.CONSTRUCTOR);
         // Call to inputFileProcessor method to process input file.
         inputFileProcessor(fp);
     }
@@ -60,7 +60,7 @@ public class InputDetails implements InputDetailsI, StdoutDisplayInterface, File
     @Override
     public void writeToFile() throws IOException {
         // TODO Auto-generated method stub
-        MyLogger.getInstnace().writeMessage("Writing output to output file from InputDetails class.",
+        MyLogger.getInstnace().writeMessage("Writing output to output file from InputDetails class."+"\n",
                 MyLogger.DebugLevel.INPUTDETAILS);
         outputFile = new File(outputFilePath);
         if (!outputFile.exists()) {
@@ -78,11 +78,13 @@ public class InputDetails implements InputDetailsI, StdoutDisplayInterface, File
 
     /**
      * writeToStdout method to print result on stdout.
+     * 
+     * @throws IOException
      */
     @Override
-    public void writeToStdout() {
+    public void writeToStdout() throws IOException {
         // TODO Auto-generated method stub
-        MyLogger.getInstnace().writeMessage("Writing output to stdout from InputDetails class.",
+        MyLogger.getInstnace().writeMessage("Writing output to stdout from InputDetails class."+"\n",
                 MyLogger.DebugLevel.INPUTDETAILS);
         for (String string : inputLines) {
             System.out.print(string);
@@ -95,11 +97,12 @@ public class InputDetails implements InputDetailsI, StdoutDisplayInterface, File
      * 
      * @param word  - Updated string.
      * @param index - index at which string need to update.
+     * @throws IOException
      */
     @Override
-    public void update(String word, int index) {
+    public void update(String word, int index) throws IOException {
         // TODO Auto-generated method stub
-        MyLogger.getInstnace().writeMessage("Updating line in inputLines list.", MyLogger.DebugLevel.INPUTDETAILS);
+        MyLogger.getInstnace().writeMessage("Updating line in inputLines list."+"\n", MyLogger.DebugLevel.INPUTDETAILS);
         inputLines.set(index, word);
 
     }
@@ -125,19 +128,19 @@ public class InputDetails implements InputDetailsI, StdoutDisplayInterface, File
      * @throws EmptyInputFileException
      */
     public void inputFileProcessor(FileProcessor fp) throws IOException, SpecialCharException, EmptyInputFileException {
-        MyLogger.getInstnace().writeMessage("Processing Input file.", MyLogger.DebugLevel.INPUTDETAILS);
+        MyLogger.getInstnace().writeMessage("Processing Input file."+"\n", MyLogger.DebugLevel.INPUTDETAILS);
         strData = fp.poll();
         // Condition to check Empty input file.
         if (strData == null) {
             throw new EmptyInputFileException("Empty Input File!");
         }
-        MyLogger.getInstnace().writeMessage("Reading Input file line by line.", MyLogger.DebugLevel.INPUTDETAILS);
+        MyLogger.getInstnace().writeMessage("Reading Input file line by line."+"\n", MyLogger.DebugLevel.INPUTDETAILS);
         while (null != strData) {
             // COndition to check input line format.
             if (pattern.matcher(strData).find()) {
                 throw new SpecialCharException("Input file contain special charachters!");
             }
-            MyLogger.getInstnace().writeMessage("Fetching and storing sentence in inputLine list.",
+            MyLogger.getInstnace().writeMessage("Fetching and storing sentence in inputLine list."+"\n",
                     MyLogger.DebugLevel.INPUTDETAILS);
 
             // Finding complete sentence from input file.

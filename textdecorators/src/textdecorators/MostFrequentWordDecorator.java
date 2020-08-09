@@ -1,5 +1,6 @@
 package textdecorators;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,9 +34,10 @@ public class MostFrequentWordDecorator extends AbstractTextDecorator {
      * 
      * @param atdIn - AbstractTextDecorator obj.
      * @param idIn  - InputDetailsI obj.
+     * @throws IOException
      */
-    public MostFrequentWordDecorator(AbstractTextDecorator atdIn, InputDetailsI idIn) {
-        MyLogger.getInstnace().writeMessage("MostFrequentWordDecorator constructor.", MyLogger.DebugLevel.CONSTRUCTOR);
+    public MostFrequentWordDecorator(AbstractTextDecorator atdIn, InputDetailsI idIn) throws IOException {
+        MyLogger.getInstnace().writeMessage("MostFrequentWordDecorator constructor."+"\n", MyLogger.DebugLevel.CONSTRUCTOR);
         atd = atdIn;
         id = idIn;
     }
@@ -44,22 +46,24 @@ public class MostFrequentWordDecorator extends AbstractTextDecorator {
      * processInputDetails method that implments finding most frequent word from the
      * input file and decorating that word with MOST_FREQUENT_ and _MOST_FREQUENT
      * before and after the word.
+     * 
+     * @throws IOException
      */
     @Override
-    public void processInputDetails() {
+    public void processInputDetails() throws IOException {
         // TODO Auto-generated method stub
-        MyLogger.getInstnace().writeMessage("MostFrequentWordDecorator processInputDetails call.",
+        MyLogger.getInstnace().writeMessage("MostFrequentWordDecorator processInputDetails call."+"\n",
                 MyLogger.DebugLevel.MOSTFREQUENTWORDDECORATOR);
-        MyLogger.getInstnace().writeMessage("MostFrequentWordDecorator calculating frequency of each word.",
+        MyLogger.getInstnace().writeMessage("MostFrequentWordDecorator calculating frequency of each word."+"\n",
                 MyLogger.DebugLevel.MOSTFREQUENTWORDDECORATOR);
         // Calculating wordFreqCounter for each word.
         freqWordsMap = wordFreqCounter();
-        MyLogger.getInstnace().writeMessage("MostFrequentWordDecorator fetching the most frequent word.",
+        MyLogger.getInstnace().writeMessage("MostFrequentWordDecorator fetching the most frequent word."+"\n",
                 MyLogger.DebugLevel.MOSTFREQUENTWORDDECORATOR);
         // Finding the most frequent word.
         mostFreqWrdkey = mostFrequentWord();
 
-        MyLogger.getInstnace().writeMessage("MostFrequentWordDecorator decorating the word.",
+        MyLogger.getInstnace().writeMessage("MostFrequentWordDecorator decorating the word."+"\n",
                 MyLogger.DebugLevel.MOSTFREQUENTWORDDECORATOR);
         // Looping through each sentence from the list.
         for (String sentence : id.getInputLineList()) {
@@ -83,7 +87,7 @@ public class MostFrequentWordDecorator extends AbstractTextDecorator {
                     wrd[i] = temp;
                 }
             }
-            MyLogger.getInstnace().writeMessage("MostFrequentWordDecorator updating sentence in inputLines list.",
+            MyLogger.getInstnace().writeMessage("MostFrequentWordDecorator updating sentence in inputLines list."+"\n",
                     MyLogger.DebugLevel.MOSTFREQUENTWORDDECORATOR);
             // Updating the word in the sentence at perticular index of the list stored in
             // inputDetails class.
@@ -92,7 +96,7 @@ public class MostFrequentWordDecorator extends AbstractTextDecorator {
         }
         // Condition to check atd contains a decorator.
         if (null != atd) {
-            MyLogger.getInstnace().writeMessage("MostFrequentWordDecorator calling KeyWordDecorator.",
+            MyLogger.getInstnace().writeMessage("MostFrequentWordDecorator calling KeyWordDecorator."+"\n",
                     MyLogger.DebugLevel.MOSTFREQUENTWORDDECORATOR);
             // Calling processInputDetails of that decorator.
             atd.processInputDetails();
