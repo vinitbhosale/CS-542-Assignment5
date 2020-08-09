@@ -40,7 +40,7 @@ public class Driver {
                 System.err.println("Error: Incorrect number of arguments. Program accepts 5 arguments.");
                 System.exit(0);
             }
-            System.out.println("Hello World! Lets get started with the assignment");
+            
             // Condition for missing input files
             if (args[0].isEmpty()) {
                 throw new FileNotFoundException("Missing Input file parameter!");
