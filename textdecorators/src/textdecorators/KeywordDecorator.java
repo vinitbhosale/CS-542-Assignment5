@@ -93,14 +93,14 @@ public class KeywordDecorator extends AbstractTextDecorator {
                                         + wordsArr[i].substring(wordIndex + keyWrd.length(),
                                                 wordIndex + keyWrd.length() + mostFreq.length())
                                         + "_KEYWORD";
-                                //
+                                // For leftover part after _KEYWORD
                                 temp = wordIndex + keyWrd.length() + mostFreq.length() == wordsArr[i].length() ? temp
                                         : temp + wordsArr[i].substring(wordIndex + keyWrd.length() + mostFreq.length());
                             } else {
                                 // Concating KEYWORD_ and _KEYWORD befor and after the word.
                                 temp = wordsArr[i].substring(0, wordIndex) + "KEYWORD_"
                                         + wordsArr[i].substring(wordIndex, wordIndex + keyWrd.length()) + "_KEYWORD";
-                                //
+                                //For leftover part after _KEYWORD
                                 temp = wordIndex + keyWrd.length() == wordsArr[i].length() ? temp
                                         : temp + wordsArr[i].substring(wordIndex + keyWrd.length());
                             }

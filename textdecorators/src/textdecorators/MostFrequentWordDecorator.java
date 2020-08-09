@@ -80,7 +80,7 @@ public class MostFrequentWordDecorator extends AbstractTextDecorator {
                     // Concating MOST_FREQUENT_ and _MOST_FREQUENT befor and after the word.
                     String temp = wrd[i].substring(0, wordIndex) + "MOST_FREQUENT_"
                             + wrd[i].substring(wordIndex, wordIndex + mostFreqWrdkey.length()) + "_MOST_FREQUENT";
-                    //
+                    // For leftover part after _MOST_FREQUENT
                     temp = wordIndex + mostFreqWrdkey.length() == wrd[i].length() ? temp
                             : temp + wrd[i].substring(wordIndex + mostFreqWrdkey.length());
                     // Updating the word.
